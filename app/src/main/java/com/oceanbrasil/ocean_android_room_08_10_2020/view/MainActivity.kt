@@ -18,17 +18,19 @@ import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var wordViewModel: WordViewModel
+    private val wordViewModel: WordViewModel by lazy {
+        ViewModelProvider(
+            this,
+            WordViewModelFactory(application)
+        ).get(WordViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        wordViewModel = ViewModelProvider(
-            this,
-            WordViewModelFactory(application)
-        ).get(WordViewModel::class.java)
+        println(wordViewModel)
 
         val adapter = WordListAdapter(this)
         recyclerView.adapter = adapter
