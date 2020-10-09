@@ -18,14 +18,14 @@ import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: WordViewModel
+    private lateinit var wordViewModel: WordViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        viewModel = ViewModelProvider(
+        wordViewModel = ViewModelProvider(
             this,
             WordViewModelFactory(application)
         ).get(WordViewModel::class.java)
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        viewModel.allWords.observe(this, Observer {
+        wordViewModel.allWords.observe(this, Observer {
             adapter.words = it
         })
 
@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
 
                 extraReply?.let { reply ->
                     val word = Word(reply)
-                    viewModel.insert(word)
+                    wordViewModel.insert(word)
                 }
             }
         }
